@@ -1,0 +1,26 @@
+.background-for-second-element{
+    background-color: aquamarine;
+}
+
+.background-for-laura{
+    background-color: greenyellow;
+}
+
+.profile-circle {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: #f0f0f0;
+    font-size: 36px;
+  }
+  
+  .initials {
+    display: inline-block;
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
+    text-align: center;
+    border-radius: 50%;
+    background-color: #333;
+    color: #fff;
+  }
