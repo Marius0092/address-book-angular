@@ -1,14 +1,18 @@
-<h2> {{ title }}</h2>
+<h2>{{ title }}</h2>
 
-<app-contact-list #contactListComponent *ngIf="!selectedContact; else contactDetails" 
-                [contactsInInput]="contacts" 
-                (selectedContactEvent)="onSelectedContact($event)">
+<app-contact-list
+  #contactListComponent
+  *ngIf="!selectedContact; else contactDetails"
+  [contactsInInput]="contacts"
+  (selectedContactEvent)="onSelectedContact($event)"
+>
 </app-contact-list>
 
 <!-- template reference variable -->
 <ng-template #contactDetails>
-    <app-contact-details
-                [selectedContactForDetails]="selectedContact"
-                (backTContactListEvent)="onBackToContactList()">
-    </app-contact-details>
+  <app-contact-details
+    [selectedContactForDetails]="selectedContact"
+    (backTContactListEvent)="onBackToContactList()"
+  >
+  </app-contact-details>
 </ng-template>

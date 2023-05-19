@@ -1,8 +1,10 @@
-<button class="btn btn-primary" (click)="changeBackgroundToAllElements()">Cambia colore sfondo</button>
+<button class="btn btn-primary" (click)="changeBackgroundToAllElements()">
+  Cambia colore sfondo
+</button>
 <div class="container">
-    <h2 *ngIf="false">Lista di Contatti</h2>
-    <ul class="list-group">
-        <!--<li class="list-group-item" [ngStyle]="{'background': backgroundForFirstContact}">
+  <h2 *ngIf="false">Lista di Contatti</h2>
+  <ul class="list-group">
+    <!--<li class="list-group-item" [ngStyle]="{'background': backgroundForFirstContact}">
             <div class="d-flex justify-content-between align-items-center">
                 <p> {{ contacts[0].firstName }} {{ contacts[0].lastName }}</p>
                 <p> {{ contacts[0].phonePrefix }} - {{ contacts[0].phoneNumber }}</p>
@@ -21,16 +23,26 @@
             </div>
         </li>-->
 
-        <li class="list-group-item" *ngFor="let contact of contacts" [ngStyle]="{'background': background}">
-            <div class="d-flex justify-content-between align-items-center">
-               <div class="profile-circle d-flex align-items-center justify-content-center">
-                    <span class="initials">{{ contact.firstName | userInitials:contact.lastName }}</span>
-                </div>
-                <!--<p>{{ contact.firstName | userInitials:contact.lastName }}</p>-->
-                <p> {{ contact.firstName }} {{ contact.lastName }}</p>
-                <p> {{ contact.phonePrefix }} - {{ contact.phoneNumber }}</p>
-                <button class="btn btn-primary" (click)="showDetails(contact)">Dettagli</button>
-            </div>
-        </li>
-    </ul>
+    <li
+      class="list-group-item"
+      *ngFor="let contact of contacts"
+      [ngStyle]="{ background: background }"
+    >
+      <div class="d-flex justify-content-between align-items-center">
+        <div
+          class="profile-circle d-flex align-items-center justify-content-center"
+        >
+          <span class="initials">{{
+            contact.firstName | userInitials : contact.lastName
+          }}</span>
+        </div>
+        <!--<p>{{ contact.firstName | userInitials:contact.lastName }}</p>-->
+        <p>{{ contact.firstName }} {{ contact.lastName }}</p>
+        <p>{{ contact.phonePrefix }} - {{ contact.phoneNumber }}</p>
+        <button class="btn btn-primary" (click)="showDetails(contact)">
+          Dettagli
+        </button>
+      </div>
+    </li>
+  </ul>
 </div>

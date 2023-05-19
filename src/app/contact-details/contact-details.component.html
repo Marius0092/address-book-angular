@@ -1,14 +1,26 @@
-
-<button class="btn btn-primary" (click)="backToContactList()">Torna alla lista</button>
+<button class="btn btn-primary" (click)="backToContactList()">
+  Torna alla lista
+</button>
 <div class="container">
-    <h2>Dettagli</h2>
-    <div class="card">
-        <div class="card-body" *ngIf="selectedContact">
-            <p>{{ selectedContact | json }}</p>
-            <h5 class="card-title">{{ selectedContact.firstName | lowercase }} {{ selectedContact.lastName | lowercase}}</h5>
-            <p class="card-text"><strong>Numero di telefono:</strong> {{ selectedContact.phonePrefix }} - {{ selectedContact.phoneNumber }}</p>
-            <p class="card-text"><strong>Email: </strong> {{ selectedContact.email }}</p>
-            <p class="card-text"><strong>Compleanno: </strong> {{ selectedContact.birthDate | date:'dd/MM/yyyy'}}</p>
-        </div>
+  <h2>Dettagli</h2>
+  <div class="card">
+    <div class="card-body" *ngIf="selectedContact">
+      <p>{{ selectedContact | json }}</p>
+      <h5 class="card-title">
+        {{ selectedContact.firstName | lowercase }}
+        {{ selectedContact.lastName | lowercase }}
+      </h5>
+      <p class="card-text">
+        <strong>Numero di telefono:</strong> {{ selectedContact.phonePrefix }} -
+        {{ selectedContact.phoneNumber }}
+      </p>
+      <p class="card-text">
+        <strong>Email: </strong> {{ selectedContact.email }}
+      </p>
+      <p class="card-text">
+        <strong>Compleanno: </strong>
+        {{ selectedContact.birthDate | date : "dd/MM/yyyy" }}
+      </p>
     </div>
+  </div>
 </div>

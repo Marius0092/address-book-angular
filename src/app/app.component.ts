@@ -1,57 +1,74 @@
-import { Component, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { Contact } from './models/contact.model';
 import { ContactListComponent } from './contact-list/contact-list.component';
+import { RetrieveContactsService } from './services/retrieve-contacts.service';
+import { Subscription } from 'rxjs';
+import { UtilityService } from './services/utility.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   title = 'address-book';
 
-  @ViewChild('contactListComponent') contactListComponent : ContactListComponent | null | undefined;
+  @ViewChild('contactListComponent') contactListComponent:
+    | ContactListComponent
+    | null
+    | undefined;
 
-  contacts: Contact[] = [
-    {
-      firstName: "Giacomo",
-      lastName: "Piantini",
-      phoneNumber: "1111111111",
-      phonePrefix: "+39",
-      email: "giacomo.piantini@mail.it",
-      birthDate: new Date("1996-07-12")
-    }, 
-    {
-      firstName: "Eleonora",
-      lastName: "Casto",
-      phoneNumber: "2222222222",
-      phonePrefix: "+39",
-      email: "eleonora.casto@mail.it",
-      birthDate: new Date("1993-11-25")
-    }, 
-    {
-      firstName: "Laura",
-      lastName: "Saporoso",
-      phoneNumber: "3333333333",
-      phonePrefix: "+39",
-      email: "laura.saporoso@mail.it",
-      birthDate: new Date("1999-01-15")
-    }
-  ]
+  contacts: Contact[] = [];
 
-  selectedContact : Contact | null | undefined;
+  contactsSubscription: Subscription = new Subscription();
 
-  onSelectedContact($event: Contact){
+  contactOrder: UtilityService = new UtilityService();
+
+  selectedContact: Contact | null | undefined;
+
+  constructor(private retrieveContactsService: RetrieveContactsService) {}
+
+  onSelectedContact($event: Contact) {
     this.selectedContact = $event;
   }
 
-  ngAfterViewInit(){
+  ngOnInit() {
+    console.log("salve sono l'onInit di app component");
+    console.log(
+      "Procedo a recuperare la lista dei contatti da 'contacts.json';"
+    );
+
+    this.contactsSubscription = this.retrieveContactsService
+      .getContactsFromJson()
+      .subscribe({
+        next: (contacts: Contact[]) => {
+          this.contacts = [...contacts];
+          let contattiOrdinati = this.contactOrder.ordinaContatti(
+            this.contacts
+          );
+          console.log('ordine alfabetico contatti');
+          console.log(contattiOrdinati);
+        },
+      });
+  }
+
+  ngAfterViewInit() {
     console.log(this.contactListComponent?.background);
   }
 
-  onBackToContactList(){
-    if(this.selectedContact){
+  onBackToContactList() {
+    if (this.selectedContact) {
       this.selectedContact = null;
     }
+  }
+
+  ngOnDestroy(): void {
+    this.contactsSubscription.unsubscribe();
   }
 }
