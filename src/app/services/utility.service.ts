@@ -1,4 +1,7 @@
 import { Injectable } from '@angular/core';
+import { Contact } from '../models/contact.model';
+import * as moment from 'moment';
+import 'moment/locale/it';
 
 @Injectable({
   providedIn: 'root',
@@ -31,25 +34,31 @@ export class UtilityService {
   }
 
   // ORDINA CONTATTI PER DATA DI NASCITA
-  public ordinaContattiPerDataNascita(contatti: any): any {
-    contatti.sort(function (a: any, b: any) {
-      let dataA = new Date(a.dataNascita);
-      let dataB = new Date(b.dataNascita);
 
-      return dataA.getTime() - dataB.getTime();
+  public ordinaContattiPerDataNascita(contatti: Contact[]): Contact[] {
+    contatti.sort((a, b) => {
+      const dataA = moment(a.birthDate);
+      const dataB = moment(b.birthDate);
+
+      if (dataA.isBefore(dataB)) {
+        return -1;
+      } else if (dataA.isAfter(dataB)) {
+        return 1;
+      } else {
+        return 0;
+      }
     });
 
     return contatti;
   }
 
   // CONVERTIRE DATA AMERICANA IN DATA ITALIANA
-  public convertiDataAmericanaInItaliana(dataAmericana: string): string {
-    let partiData = dataAmericana.split('/');
-    let giorno = partiData[1];
-    let mese = partiData[0];
-    let anno = partiData[2];
 
-    return giorno + '/' + mese + '/' + anno;
+  public convertDateToItalianFormat(date: string): string {
+    const formattedDate = moment(date, 'MM/DD/YYYY')
+      .locale('it')
+      .format('DD/MM/YYYY');
+    return formattedDate;
   }
 
   // RICERCA CONTATTO
@@ -61,8 +70,24 @@ export class UtilityService {
     }
     return null;
   }
-}
 
+  // PRIMA LETTERA MAIUSCOLA
+  public adjustFormatName(firstName: string, lastName?: string) {
+    const formattedFirstName =
+      firstName.slice(0, 1).toUpperCase() + firstName.slice(1).toLowerCase();
+    const formattedLastName = lastName
+      ? lastName.slice(0, 1).toUpperCase() + lastName.slice(1).toLowerCase()
+      : '';
+    return (
+      formattedFirstName + (formattedLastName ? ' ' + formattedLastName : '')
+    );
+  }
+
+  // NOME E COGNOME MAIUSCOLI
+  public adjustFormatFullName(contact: Contact) {
+    return this.adjustFormatName(contact.firstName, contact.lastName);
+  }
+}
 // metodo che rende maiuscole le iniziali di firstName e lastName
 
 // metodo che converte una data dal formato americano a quello italiano

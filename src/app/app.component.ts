@@ -54,8 +54,23 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
           );
           console.log('ordine alfabetico contatti');
           console.log(contattiOrdinati);
+          this.contacts.forEach((contact) => {
+            console.log(
+              this.contactOrder.adjustFormatName(
+                contact.firstName,
+                contact.lastName
+              )
+            );
+          });
+          console.log('ordino per data di nascita');
+          console.log(
+            this.contactOrder.ordinaContattiPerDataNascita(this.contacts)
+          );
         },
       });
+    const date = '05/19/2023';
+    const italianDate = this.contactOrder.convertDateToItalianFormat(date);
+    console.log(italianDate);
   }
 
   ngAfterViewInit() {
