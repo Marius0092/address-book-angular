@@ -1,72 +1,59 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, OnInit, AfterContentInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Contact } from '../models/contact.model';
+import { Subscription } from 'rxjs';
+import { RetrieveContactsService } from '../services/retrieve-contacts.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-contact-list',
   templateUrl: './contact-list.component.html',
-  styleUrls: ['./contact-list.component.css']
+  styleUrls: ['./contact-list.component.css'],
 })
-export class ContactListComponent implements OnChanges, OnInit, AfterContentInit, OnDestroy {
+export class ContactListComponent implements OnInit, OnDestroy {
+  contacts: Contact[] = [];
 
-  @Input('contactsInInput') contacts: Contact[] = [];
+  contactsSubscription: Subscription = new Subscription();
 
-  @Input() background: string = "white";
-
-  
-
-  @Output() selectedContactEvent: EventEmitter<Contact> = new EventEmitter<Contact>();
+  background: string = 'white';
 
   backgroundForFirstContact: string = 'yellow';
 
+  constructor(
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private contactsService: RetrieveContactsService
+  ) {}
 
-  ngOnChanges(changes: SimpleChanges){
-    console.log("oggetto di tipo SimpleChanges, contenente tutti gli input", changes)
-    if(changes["contacts"]){
-      if(changes["contacts"].currentValue !== changes["contacts"].previousValue){
-        //implementiamo una logica per il cambiamento avvenuto
-        console.log("la proprietà in input è cambiata")
-      }else{
-        console.log("la proprietà in input è rimasta invariata")
-      }
+  ngOnInit() {
+    this.contactsSubscription = this.contactsService
+      .getContactsFromJson()
+      .subscribe({
+        next: (contacts: Contact[]) => (this.contacts = [...contacts]),
+      });
+  }
+
+  changeBackground() {
+    if (this.backgroundForFirstContact === 'yellow') {
+      this.backgroundForFirstContact = 'red';
+    } else {
+      this.backgroundForFirstContact = 'yellow';
     }
   }
 
-  ngOnInit(){
-    console.log(this.contacts)
+  changeBackgroundToAllElements() {
+    if (this.background === 'white') {
+      this.background = 'aquamarine';
+    } else {
+      this.background = 'white';
+    }
   }
 
-  ngAfterContentInit(): void {
-    console.log("In risposta all'evento after content init")
+  showDetails(contactId: number) {
+    console.log('ID del contatto selezionato uguale a:' + contactId);
+    this.router.navigateByUrl('contact/' + contactId);
   }
 
   ngOnDestroy(): void {
-    console.log("un attimo prima che Angula rimuova il componente")
+    this.contactsSubscription.unsubscribe();
   }
-
-  changeBackground(){
-    if(this.backgroundForFirstContact === "yellow"){
-      this.backgroundForFirstContact = "red";
-    }else{
-      this.backgroundForFirstContact = "yellow";
-    }
-  }
-
-  changeBackgroundToAllElements(){
-    if(this.background === "white"){
-      this.background = "aquamarine";
-    }else{
-      this.background = "white";
-    }
-  }
-
-  showDetails(contact: Contact){
-      console.log(contact);
-      //emettere l'evento
-      this.selectedContactEvent.emit(contact);
-  }
-
-  isCalledEleonora(firstName: string){
-    return firstName.toLowerCase() === "eleonora";
-  }
-
 }

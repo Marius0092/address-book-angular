@@ -13,4 +13,6 @@ export class RetrieveContactsService {
   public getContactsFromJson(): Observable<Contact[]> {
     return this.httpClient.get<Contact[]>('assets/json/contacts.json');
   }
+
+  // metodo per il recupero del singolo contatto attraverso l'ID
 }

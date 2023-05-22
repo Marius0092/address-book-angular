@@ -39,7 +39,7 @@
         <!--<p>{{ contact.firstName | userInitials:contact.lastName }}</p>-->
         <p>{{ contact.firstName }} {{ contact.lastName }}</p>
         <p>{{ contact.phonePrefix }} - {{ contact.phoneNumber }}</p>
-        <button class="btn btn-primary" (click)="showDetails(contact)">
+        <button class="btn btn-primary" (click)="showDetails(contact.id)">
           Dettagli
         </button>
       </div>
