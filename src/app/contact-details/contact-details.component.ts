@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Contact } from '../models/contact.model';
+import { Contact, ContactDetails } from '../models/contact.model';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { RetrieveContactsService } from '../services/retrieve-contacts.service';
-import { Subscription } from 'rxjs';
+import { Subscription, concatMap } from 'rxjs';
 
 @Component({
   selector: 'app-contact-details',
@@ -14,34 +14,29 @@ export class ContactDetailsComponent implements OnInit, OnDestroy {
   retrieveCurrentId: Subscription = new Subscription();
   contactsSubscription: Subscription = new Subscription();
 
-  selectedContact!: Contact;
+  selectedContact!: ContactDetails;
 
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private contactsService: RetrieveContactsService
   ) {
-    this.retrieveCurrentId = this.activatedRoute.params.subscribe({
-      next: (params: Params) => {
-        this.currentId = params['id'];
-      },
-    });
+    this.retrieveCurrentId = this.activatedRoute.params
+      .pipe(
+        concatMap((params: Params) => {
+          this.currentId = params['id'];
+          return this.contactsService.getContactDetails(this.currentId);
+        })
+      )
+      .subscribe({
+        next: (contact: ContactDetails) => {
+          this.selectedContact = contact;
+        },
+      });
   }
 
   ngOnInit(): void {
     console.log('Attualmente il nostro curreintId ha valore' + this.currentId);
-
-    // Recupero di tutta la lista di contatti. Evitato l'uso di rxjs per evitare di aggiungere concetti non ancora introdotti nei moduli sottoposti;
-    this.contactsSubscription = this.contactsService
-      .getContactsFromJson()
-      .subscribe({
-        next: (contacts: Contact[]) =>
-          (this.selectedContact = {
-            ...contacts.find(
-              (contact: Contact) => contact.id == this.currentId
-            )!,
-          }),
-      });
   }
 
   closeDetail() {

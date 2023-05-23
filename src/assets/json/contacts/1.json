@@ -1,0 +1,9 @@
+{
+  "id": 1,
+  "firstName": "Giacomo",
+  "lastName": "Piantini",
+  "phoneNumber": "1111111111",
+  "phonePrefix": "+39",
+  "email": "giacomo.piantini@mail.it",
+  "birthDate": "1996-07-12"
+}

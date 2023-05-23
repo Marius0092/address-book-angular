@@ -23,7 +23,7 @@ const routes: Routes = [
 
   {
     path: '**',
-    redirectTo: 'contacts',
+    redirectTo: '/contacts',
     pathMatch: 'full',
   },
 ];
