@@ -1,6 +1,21 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  ViewChild,
+  ElementRef,
+} from '@angular/core';
 import { Contact } from '../models/contact.model';
-import { Subscription } from 'rxjs';
+import {
+  Observable,
+  Subscription,
+  debounceTime,
+  fromEvent,
+  map,
+  filter,
+  switchMap,
+  startWith,
+} from 'rxjs';
 import { RetrieveContactsService } from '../services/retrieve-contacts.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -14,6 +29,8 @@ export class ContactListComponent implements OnInit, OnDestroy {
 
   contactsSubscription: Subscription = new Subscription();
 
+  @ViewChild('inputFilter', { static: true }) inputFilter!: ElementRef;
+
   background: string = 'white';
 
   backgroundForFirstContact: string = 'yellow';
@@ -25,11 +42,35 @@ export class ContactListComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.contactsSubscription = this.contactsService
-      .getContactsFromJson()
-      .subscribe({
-        next: (contacts: Contact[]) => (this.contacts = [...contacts]),
+    (
+      fromEvent(
+        this.inputFilter.nativeElement,
+        'keyup'
+      ) as Observable<KeyboardEvent>
+    )
+      .pipe(
+        debounceTime(1000),
+        filter(
+          (keyboardEvent) =>
+            (keyboardEvent.target as any).value.length >= 3 ||
+            (keyboardEvent.target as any).value.length >= 0
+        ),
+        map((keyboardEvent) => (keyboardEvent.target as any).value),
+        startWith(''),
+        switchMap((inputValue: string) => {
+          return this.contactsService.getContactsFromJson(inputValue);
+        })
+      )
+      .subscribe((filteredContacts) => {
+        console.log(filteredContacts);
+        this.contacts = filteredContacts;
       });
+
+    // this.contactsSubscription = this.contactsService
+    //   .getContactsFromJson()
+    //   .subscribe({
+    //     next: (contacts: Contact[]) => (this.contacts = [...contacts]),
+    //   });
   }
 
   changeBackground() {

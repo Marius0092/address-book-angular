@@ -9,6 +9,23 @@ import { Subscription, concatMap } from 'rxjs';
   templateUrl: './contact-details.component.html',
   styleUrls: ['./contact-details.component.css'],
 })
+
+// constructor(private contactsService: ContactsService, private router: Router, private activatedRoute: ActivatedRoute) {
+//   this.retriveCurrentId = this.activatedRoute.params.pipe(
+//     map((params:Params) => {
+//       this.currentId = params["id"]
+//       return this.currentId
+//     }),
+//     map((id: number) => {
+//       return this.contactsService.getContactDetails(id)
+//     }),
+//     concatAll()
+//   ).subscribe({
+//     next: (contactDetails: ContactDetails) => {
+//       this.selectedContact = contactDetails
+//     }
+//   })
+// }
 export class ContactDetailsComponent implements OnInit, OnDestroy {
   currentId!: number;
   retrieveCurrentId: Subscription = new Subscription();
