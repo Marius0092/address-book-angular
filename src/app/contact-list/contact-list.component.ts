@@ -89,6 +89,14 @@ export class ContactListComponent implements OnInit, OnDestroy {
     }
   }
 
+  ordinaContatti() {
+    this.contacts.sort((a, b) => {
+      const nameA = a.lastName.toLowerCase();
+      const nameB = b.lastName.toLowerCase();
+      return nameA.localeCompare(nameB);
+    });
+  }
+
   showDetails(contactId: number) {
     console.log('ID del contatto selezionato uguale a:' + contactId);
     this.router.navigateByUrl('contact/' + contactId);
