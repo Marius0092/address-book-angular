@@ -9,9 +9,16 @@ import { Contact, ContactDetails } from '../models/contact.model';
 export class RetrieveContactsService {
   constructor(private httpClient: HttpClient) {}
 
+  /*
+   * Create > POST:
+   * Read > GET:
+   * Update > PUT:
+   * Delete > DELETE:
+   */
+
   // Metodo per la simulazione di recupero dati da un ipotetico backend
   public getContactsFromJson(inputSearch?: string): Observable<Contact[]> {
-    return this.httpClient.get<Contact[]>('assets/json/contacts.json').pipe(
+    return this.httpClient.get<Contact[]>('contacts.json').pipe(
       delay(500),
 
       map((contacts: Contact[]) => {
@@ -29,9 +36,7 @@ export class RetrieveContactsService {
   }
 
   public getContactDetails(id: number): Observable<ContactDetails> {
-    return this.httpClient.get<ContactDetails>(
-      'assets/json/contacts/' + id + '.json'
-    );
+    return this.httpClient.get<ContactDetails>('contacts/' + id + '.json');
   }
 
   // metodo per il recupero del singolo contatto attraverso l'ID

@@ -7,7 +7,11 @@ import { ContactListComponent } from './contact-list/contact-list.component';
 import { CommonModule } from '@angular/common';
 import { ContactDetailsComponent } from './contact-details/contact-details.component';
 import { UserInitialsPipe } from './pipes/user-initials.pipe';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HttpResponseInterceptor } from './interceptors/http-response.interceptor';
+import { HeaderInterceptor } from './interceptors/header.interceptor';
+import { UrlInterceptor } from './interceptors/url.interceptor';
+import { TimeInterceptor } from './interceptors/time.interceptor';
 
 @NgModule({
   declarations: [
@@ -17,7 +21,28 @@ import { HttpClientModule } from '@angular/common/http';
     UserInitialsPipe,
   ],
   imports: [BrowserModule, AppRoutingModule, CommonModule, HttpClientModule],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpResponseInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HeaderInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: UrlInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TimeInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
