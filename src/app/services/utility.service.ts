@@ -18,8 +18,8 @@ export class UtilityService {
   }
 
   // ORDINA CONTATTI IN ORDINE ALFABETICO
-  public ordinaContatti(array: any[]): any[] {
-    return array.sort((a, b) => {
+  public ordinaContatti(contatti: Contact[]): Contact[] {
+    return contatti.sort((a, b) => {
       const nameA = a.firstName.toLowerCase();
       const nameB = b.firstName.toLowerCase();
 
@@ -35,22 +35,22 @@ export class UtilityService {
 
   // ORDINA CONTATTI PER DATA DI NASCITA
 
-  public ordinaContattiPerDataNascita(contatti: Contact[]): Contact[] {
-    contatti.sort((a, b) => {
-      const dataA = moment(a.birthDate);
-      const dataB = moment(b.birthDate);
+  // public ordinaContattiPerDataNascita(contatti: Contact[]): Contact[] {
+  //   contatti.sort((a, b) => {
+  //     const dataA = moment(a.birthDate);
+  //     const dataB = moment(b.birthDate);
 
-      if (dataA.isBefore(dataB)) {
-        return -1;
-      } else if (dataA.isAfter(dataB)) {
-        return 1;
-      } else {
-        return 0;
-      }
-    });
+  //     if (dataA.isBefore(dataB)) {
+  //       return -1;
+  //     } else if (dataA.isAfter(dataB)) {
+  //       return 1;
+  //     } else {
+  //       return 0;
+  //     }
+  //   });
 
-    return contatti;
-  }
+  //   return contatti;
+  // }
 
   // CONVERTIRE DATA AMERICANA IN DATA ITALIANA
 

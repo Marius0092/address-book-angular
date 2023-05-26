@@ -18,6 +18,7 @@ import {
 } from 'rxjs';
 import { RetrieveContactsService } from '../services/retrieve-contacts.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { UtilityService } from '../services/utility.service';
 
 @Component({
   selector: 'app-contact-list',
@@ -38,7 +39,8 @@ export class ContactListComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private contactsService: RetrieveContactsService
+    private contactsService: RetrieveContactsService,
+    private utilityService: UtilityService
   ) {}
 
   ngOnInit() {
@@ -89,12 +91,8 @@ export class ContactListComponent implements OnInit, OnDestroy {
     }
   }
 
-  ordinaContatti() {
-    this.contacts.sort((a, b) => {
-      const nameA = a.lastName.toLowerCase();
-      const nameB = b.lastName.toLowerCase();
-      return nameA.localeCompare(nameB);
-    });
+  orderContacts() {
+    this.utilityService.ordinaContatti(this.contacts);
   }
 
   showDetails(contactId: number) {
