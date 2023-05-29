@@ -7,6 +7,9 @@
 <div class="container">
   <h2 *ngIf="false">Lista di Contatti</h2>
   <input #inputFilter type="text" placeholder="Filtra per nome" />
+  <button class="btn btn-primary" routerLink="/add-contact">
+    Aggiungi contatto
+  </button>
   <ul class="list-group">
     <!--<li class="list-group-item" [ngStyle]="{'background': backgroundForFirstContact}">
             <div class="d-flex justify-content-between align-items-center">

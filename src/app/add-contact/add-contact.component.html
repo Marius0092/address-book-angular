@@ -1,0 +1,123 @@
+<button class="btn btn-primary" (click)="goBack()">Torna indietro</button>
+<form #contactForm="ngForm" (ngSubmit)="saveForm(contactForm)">
+  <div>
+    <label for="firstName">Nome</label>
+    <input
+      #inputName="ngModel"
+      id="firstName"
+      name="firstName"
+      type="text"
+      [(ngModel)]="newContact.firstName"
+      required
+    />
+    <p *ngIf="inputName.dirty && inputName.errors?.['required']">Compilare</p>
+  </div>
+  <div>
+    <label for="lastName">Cognome</label>
+    <input
+      id="lastName"
+      name="lastName"
+      type="text"
+      [(ngModel)]="newContact.lastName"
+      required
+    />
+  </div>
+  <div>
+    <label for="gender">Maschio</label>
+    <input
+      id="genderMale"
+      name="gender"
+      type="radio"
+      [(ngModel)]="newContact.gender"
+      value="M"
+    />
+    <label for="gender">Femmina</label>
+    <input
+      id="genderFemale"
+      name="gender"
+      type="radio"
+      [(ngModel)]="newContact.gender"
+      value="F"
+    />
+    <label for="gender">ND</label>
+    <input
+      id="genderUndefined"
+      name="gender"
+      type="radio"
+      [(ngModel)]="newContact.gender"
+      value="N"
+    />
+  </div>
+  <div>
+    <label for="phonePrefix">Prefisso</label>
+    <input
+      id="phonePrefix"
+      name="phonePrefix"
+      type="tel"
+      [(ngModel)]="newContact.phonePrefix"
+      required
+    />
+  </div>
+
+  <div>
+    <label for="phoneNumber">Numero di telefono</label>
+    <input
+      id="phoneNumber"
+      name="phoneNumber"
+      type="tel"
+      [(ngModel)]="newContact.phoneNumber"
+      required
+    />
+  </div>
+
+  <div>
+    <label for="birthDate">Data di nascita</label>
+    <input
+      id="birthDate"
+      name="birthDate"
+      type="date"
+      [(ngModel)]="newContact.birthDate"
+      required
+    />
+  </div>
+  <div>
+    <label for="email">Email</label>
+    <input
+      id="email"
+      name="email"
+      type="email"
+      [(ngModel)]="newContact.email"
+      required
+    />
+  </div>
+  <div>
+    <label for="drivingLicense">Patente</label>
+    <input
+      id="drivingLicense"
+      name="drivingLicense"
+      type="checkbox"
+      [(ngModel)]="newContact.drivingLicense"
+      required
+    />
+  </div>
+  <div>
+    <label for="education">Titolo di studio</label>
+    <select id="education" name="education" [(ngModel)]="newContact.education">
+      <option [ngValue]="0">Licenza Media</option>
+      <option [ngValue]="1">Diploma</option>
+      <option [ngValue]="2">Laurea</option>
+    </select>
+  </div>
+  <button type="submit" [disabled]="contactForm.invalid">Salva</button>
+</form>
+
+<div>
+  touched: {{ contactForm.touched }} untouched: {{ contactForm.untouched }}
+</div>
+<div>pristine: {{ contactForm.pristine }} dirty: {{ contactForm.dirty }}</div>
+
+<!-- <div>{{ newContact }}</div> -->
+<button class="btn btn-danger" type="reset" (click)="contactForm.reset()">
+  Reset
+</button>
+{{ inputName.errors | json }}

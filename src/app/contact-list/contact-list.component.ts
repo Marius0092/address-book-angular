@@ -19,6 +19,7 @@ import {
 import { RetrieveContactsService } from '../services/retrieve-contacts.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UtilityService } from '../services/utility.service';
+import { ContactsPersistenceService } from '../services/contacts-persistence.service';
 
 @Component({
   selector: 'app-contact-list',
@@ -40,7 +41,8 @@ export class ContactListComponent implements OnInit, OnDestroy {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private contactsService: RetrieveContactsService,
-    private utilityService: UtilityService
+    private utilityService: UtilityService,
+    private contactPersistence: ContactsPersistenceService
   ) {}
 
   ngOnInit() {
@@ -60,7 +62,7 @@ export class ContactListComponent implements OnInit, OnDestroy {
         map((keyboardEvent) => (keyboardEvent.target as any).value),
         startWith(''),
         switchMap((inputValue: string) => {
-          return this.contactsService.getContactsFromJson(inputValue);
+          return this.contactsService.getContacts(inputValue);
         })
       )
       .subscribe((filteredContacts) => {

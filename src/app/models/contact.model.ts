@@ -8,5 +8,14 @@ export interface ContactDetails extends Contact {
   phoneNumber: string;
   phonePrefix: string;
   email?: string;
-  birthDate: Date;
+  birthDate: Date | string;
+  gender: 'M' | 'F' | 'N';
+  drivingLicense: boolean;
+  education: Education;
+}
+
+export enum Education {
+  middleLicense,
+  diploma,
+  degree,
 }
