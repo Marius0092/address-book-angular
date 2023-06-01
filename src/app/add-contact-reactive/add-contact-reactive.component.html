@@ -1,0 +1,83 @@
+<!-- <button class="btn btn-primary" (click)="goBack()">Torna indietro</button> -->
+
+<form [formGroup]="contactForm" (ngSubmit)="saveForm(contactForm.value)">
+  <div>
+    <label for="firstName">Nome</label>
+    <input
+      [class.border-danger]
+      formControlName="firstName"
+      id="firstName"
+      type="text"
+    />
+    <p *ngIf="contactForm.controls['firstName'].errors?.['required']">
+      Compilare
+    </p>
+  </div>
+  <div>
+    <label for="lastName">Cognome</label>
+    <input id="lastName" type="text" formControlName="lastName" />
+  </div>
+
+  <div formGroupName="details">
+    <div>
+      <label for="gender">Maschio</label>
+      <input id="genderMale" type="radio" value="M" formControlName="gender" />
+      <label for="gender">Femmina</label>
+      <input
+        id="genderFemale"
+        type="radio"
+        value="F"
+        formControlName="gender"
+      />
+      <label for="gender">ND</label>
+      <input
+        id="genderUndefined"
+        type="radio"
+        value="N"
+        formControlName="gender"
+      />
+    </div>
+    <div>
+      <label for="phonePrefix">Prefisso</label>
+      <input id="phonePrefix" type="tel" formControlName="phonePrefix" />
+    </div>
+
+    <div>
+      <label for="phoneNumber">Numero di telefono</label>
+      <input id="phoneNumber" type="tel" formControlName="phoneNumber" />
+    </div>
+
+    <div>
+      <label for="birthDate">Data di nascita</label>
+      <input id="birthDate" type="date" formControlName="birthDate" />
+    </div>
+    <div>
+      <label for="email">Email</label>
+      <input id="email" type="email" formControlName="email" />
+      <!-- {{ contactForm.controls["email"].errors | json }} -->
+    </div>
+    <div>
+      <label for="drivingLicense">Patente</label>
+      <input
+        id="drivingLicense"
+        type="checkbox"
+        formControlName="drivingLicense"
+      />
+    </div>
+    <div>
+      <label for="education">Titolo di studio</label>
+      <select id="education" formControlName="education">
+        <option [ngValue]="0">Licenza Media</option>
+        <option [ngValue]="1">Diploma</option>
+        <option [ngValue]="2">Laurea</option>
+      </select>
+    </div>
+  </div>
+
+  <button type="submit" [disabled]="contactForm.invalid">Salva</button>
+</form>
+
+<!-- <div>{{ newContact }}</div> -->
+<button class="btn btn-danger" type="reset" (click)="contactForm.reset()">
+  Reset
+</button>

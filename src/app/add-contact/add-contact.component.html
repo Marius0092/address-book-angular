@@ -3,6 +3,7 @@
   <div>
     <label for="firstName">Nome</label>
     <input
+      [class.border-danger]="inputName.dirty && inputName.errors?.['required']"
       #inputName="ngModel"
       id="firstName"
       name="firstName"

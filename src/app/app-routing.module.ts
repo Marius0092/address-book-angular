@@ -4,6 +4,7 @@ import { ContactListComponent } from './contact-list/contact-list.component';
 import { ContactDetailsComponent } from './contact-details/contact-details.component';
 import { TypeCheckGuard } from './guards/type-check.guard';
 import { AddContactComponent } from './add-contact/add-contact.component';
+import { AddContactReactiveComponent } from './add-contact-reactive/add-contact-reactive.component';
 
 const routes: Routes = [
   {
@@ -25,6 +26,11 @@ const routes: Routes = [
   {
     path: 'add-contact',
     component: AddContactComponent,
+  },
+
+  {
+    path: 'add-contact-reactive',
+    component: AddContactReactiveComponent,
   },
 
   {

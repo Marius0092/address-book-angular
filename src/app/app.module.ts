@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ContactListComponent } from './contact-list/contact-list.component';
@@ -13,7 +12,8 @@ import { HeaderInterceptor } from './interceptors/header.interceptor';
 import { UrlInterceptor } from './interceptors/url.interceptor';
 import { TimeInterceptor } from './interceptors/time.interceptor';
 import { AddContactComponent } from './add-contact/add-contact.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AddContactReactiveComponent } from './add-contact-reactive/add-contact-reactive.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +22,7 @@ import { FormsModule } from '@angular/forms';
     ContactDetailsComponent,
     UserInitialsPipe,
     AddContactComponent,
+    AddContactReactiveComponent,
   ],
   imports: [
     BrowserModule,
@@ -29,6 +30,7 @@ import { FormsModule } from '@angular/forms';
     CommonModule,
     HttpClientModule,
     FormsModule,
+    ReactiveFormsModule,
   ],
   providers: [
     {
