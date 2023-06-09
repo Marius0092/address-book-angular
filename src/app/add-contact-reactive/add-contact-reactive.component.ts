@@ -18,6 +18,7 @@ import {
   interval,
   map,
   merge,
+  of,
   retry,
   take,
   tap,
@@ -111,13 +112,15 @@ export class AddContactReactiveComponent implements OnInit {
 
   upperCaseValidator(): ValidatorFn {
     return (control) => {
-      console.log('validatore', control.value);
-      control.errors;
+      if (!control.value || control.value === '') {
+        return null; // Il controllo è vuoto, non ci sono errori
+      }
+
       const upperCaseError: ValidationErrors = {
         upperCase: true,
       };
       if (control.value == control.value.toUpperCase()) {
-        return null;
+        return null; // Il valore è tutto maiuscolo, non ci sono errori
       }
       return upperCaseError;
     };
@@ -126,6 +129,11 @@ export class AddContactReactiveComponent implements OnInit {
   upperCaseValidatorAsync(): AsyncValidatorFn {
     return (control) => {
       console.log('validatore', control.value);
+
+      if (!control.value || control.value === '') {
+        return of(null); // Il controllo è vuoto, restituisci un observable completato con null
+      }
+
       return interval(3000).pipe(
         take(1),
         map((_) => {
@@ -134,7 +142,7 @@ export class AddContactReactiveComponent implements OnInit {
             asyncUpperCase: true,
           };
           if (control.value == control.value.toUpperCase()) {
-            return null;
+            return null; // Il valore è tutto maiuscolo, non ci sono errori
           }
           return upperCaseError;
         })
