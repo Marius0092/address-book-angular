@@ -14,6 +14,8 @@ import { TimeInterceptor } from './interceptors/time.interceptor';
 import { AddContactComponent } from './add-contact/add-contact.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AddContactReactiveComponent } from './add-contact-reactive/add-contact-reactive.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MaterialModule } from './material/material.module';
 
 @NgModule({
   declarations: [
@@ -31,6 +33,8 @@ import { AddContactReactiveComponent } from './add-contact-reactive/add-contact-
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    BrowserAnimationsModule,
+    MaterialModule,
   ],
   providers: [
     {

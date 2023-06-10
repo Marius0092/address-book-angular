@@ -1,4 +1,4 @@
-<button class="btn btn-primary" (click)="closeDetail()">
+<!-- <button class="btn btn-primary" (click)="closeDetail()">
   Chiudi Dettaglio
 </button>
 <div class="container">
@@ -23,4 +23,43 @@
       </p>
     </div>
   </div>
+</div> -->
+
+<button
+  class="close-details"
+  mat-raised-button
+  color="primary"
+  (click)="closeDetail()"
+>
+  Chiudi Dettaglio
+</button>
+
+<div class="container">
+  <mat-card class="example-card">
+    <mat-card-header>
+      <div mat-card-avatar class="example-header-image"></div>
+      <mat-card-title>
+        {{ selectedContact.firstName | lowercase }}
+        {{ selectedContact.lastName | lowercase }}
+      </mat-card-title>
+      <mat-card-subtitle>
+        <strong>Email: </strong> {{ selectedContact.email }}
+      </mat-card-subtitle>
+    </mat-card-header>
+    <img
+      mat-card-image
+      src="https://material.angular.io/assets/img/examples/shiba2.jpg"
+      alt="Photo of a Shiba Inu"
+    />
+    <mat-card-content>
+      <p>
+        {{ selectedContact.birthDate }}
+        {{ selectedContact.gender }}
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button>LIKE</button>
+      <button mat-button>SHARE</button>
+    </mat-card-actions>
+  </mat-card>
 </div>
