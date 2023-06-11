@@ -1,27 +1,33 @@
 <button class="btn btn-primary" (click)="goBack()">Torna indietro</button>
 <form #contactForm="ngForm" (ngSubmit)="saveForm(contactForm)">
   <div>
-    <label for="firstName">Nome</label>
-    <input
-      [class.border-danger]="inputName.dirty && inputName.errors?.['required']"
-      #inputName="ngModel"
-      id="firstName"
-      name="firstName"
-      type="text"
-      [(ngModel)]="newContact.firstName"
-      required
-    />
-    <p *ngIf="inputName.dirty && inputName.errors?.['required']">Compilare</p>
+    <mat-form-field>
+      <mat-label for="firstName">Nome</mat-label>
+      <input
+        matInput
+        [class.border-danger]="inputName.dirty && inputName.errors?.['required']"
+        #inputName="ngModel"
+        id="firstName"
+        name="firstName"
+        type="text"
+        [(ngModel)]="newContact.firstName"
+        required
+      />
+      <p *ngIf="inputName.dirty && inputName.errors?.['required']">Compilare</p>
+    </mat-form-field>
   </div>
   <div>
-    <label for="lastName">Cognome</label>
-    <input
-      id="lastName"
-      name="lastName"
-      type="text"
-      [(ngModel)]="newContact.lastName"
-      required
-    />
+    <mat-form-field>
+      <mat-label for="lastName">Cognome</mat-label>
+      <input
+        matInput
+        id="lastName"
+        name="lastName"
+        type="text"
+        [(ngModel)]="newContact.lastName"
+        required
+      />
+    </mat-form-field>
   </div>
   <div>
     <label for="gender">Maschio</label>
@@ -50,46 +56,61 @@
     />
   </div>
   <div>
-    <label for="phonePrefix">Prefisso</label>
-    <input
-      id="phonePrefix"
-      name="phonePrefix"
-      type="tel"
-      [(ngModel)]="newContact.phonePrefix"
-      required
-    />
+    <mat-form-field>
+      <mat-label for="phonePrefix">Prefisso</mat-label>
+      <input
+        matInput
+        id="phonePrefix"
+        name="phonePrefix"
+        type="tel"
+        [(ngModel)]="newContact.phonePrefix"
+        required
+      />
+    </mat-form-field>
   </div>
 
   <div>
-    <label for="phoneNumber">Numero di telefono</label>
-    <input
-      id="phoneNumber"
-      name="phoneNumber"
-      type="tel"
-      [(ngModel)]="newContact.phoneNumber"
-      required
-    />
+    <mat-form-field>
+      <mat-label for="phoneNumber">Numero di telefono</mat-label>
+      <input
+        matInput
+        id="phoneNumber"
+        name="phoneNumber"
+        type="tel"
+        [(ngModel)]="newContact.phoneNumber"
+        required
+      />
+    </mat-form-field>
   </div>
 
   <div>
-    <label for="birthDate">Data di nascita</label>
-    <input
-      id="birthDate"
-      name="birthDate"
-      type="date"
-      [(ngModel)]="newContact.birthDate"
-      required
-    />
+    <mat-form-field>
+      <mat-label>Data di nascita</mat-label>
+      <input
+        matInput
+        [matDatepicker]="picker"
+        id="birthDate"
+        name="birthDate"
+        [(ngModel)]="newContact.birthDate"
+        required
+      />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
   </div>
+
   <div>
-    <label for="email">Email</label>
-    <input
-      id="email"
-      name="email"
-      type="email"
-      [(ngModel)]="newContact.email"
-      required
-    />
+    <mat-form-field>
+      <mat-label for="email">Email</mat-label>
+      <input
+        matInput
+        id="email"
+        name="email"
+        type="email"
+        [(ngModel)]="newContact.email"
+        required
+      />
+    </mat-form-field>
   </div>
   <div>
     <label for="drivingLicense">Patente</label>
